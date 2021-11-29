@@ -79,6 +79,7 @@ export interface MenuObjectProps extends MenuObjectChildProps {
 }
 
 const StyledHeader = styled.header`
+  display: none;
   background-color: white;
   margin-bottom: 2px;
   &:nth-last-of-type(2) nav {
@@ -171,10 +172,14 @@ export function Menu({
   isFrontendRoute = () => false,
 }: MenuProps) {
   const [showMenu, setMenu] = useState<MenuMode>('horizontal');
-  delete  menu[2].childs;
-  delete  menu[3].childs;
-  menu[2].url = "/superset/sqllab/"
-  menu[3].url = "/tablemodelview/list"
+  if(menu[2]) {
+    delete  menu[2].childs;
+    menu[2].url = "/superset/sqllab/"
+  }
+  if(menu[3]){
+    delete  menu[3].childs;
+    menu[3].url = "/tablemodelview/list"
+  }
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth <= 767) {
