@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { styled, SupersetClient, t } from '@superset-ui/core';
+import { SupersetClient, t } from '@superset-ui/core';
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import rison from 'rison';
@@ -24,7 +24,6 @@ import { isFeatureEnabled, FeatureFlag } from 'src/featureFlags';
 import {
   createFetchRelated,
   createErrorHandler,
-  handleDashboardDelete,
 } from 'src/views/CRUD/utils';
 import { useListViewResource, useFavoriteStatus } from 'src/views/CRUD/hooks';
 import ConfirmStatusChange from 'src/components/ConfirmStatusChange';
@@ -89,10 +88,6 @@ interface Dashboard {
   owners: Owner[];
   created_by: object;
 }
-
-const Actions = styled.div`
-  color: ${({ theme }) => theme.colors.grayscale.base};
-`;
 
 function DashboardList(props: DashboardListProps) {
   const { addDangerToast, addSuccessToast } = props;
@@ -313,89 +308,6 @@ function DashboardList(props: DashboardListProps) {
         accessor: 'owners',
         disableSortBy: true,
         size: 'xl',
-      },
-      {
-        Cell: ({ row: { original } }: any) => {
-          const handleDelete = () =>
-            handleDashboardDelete(
-              original,
-              refreshData,
-              addSuccessToast,
-              addDangerToast,
-            );
-          const handleEdit = () => openDashboardEditModal(original);
-          const handleExport = () => handleBulkDashboardExport([original]);
-
-          return (
-            <Actions className="actions">
-              {canDelete && (
-                <ConfirmStatusChange
-                  title={t('Please confirm')}
-                  description={
-                    <>
-                      {t('Are you sure you want to delete')}{' '}
-                      <b>{original.dashboard_title}</b>?
-                    </>
-                  }
-                  onConfirm={handleDelete}
-                >
-                  {confirmDelete => (
-                    <Tooltip
-                      id="delete-action-tooltip"
-                      title={t('Delete')}
-                      placement="bottom"
-                    >
-                      <span
-                        role="button"
-                        tabIndex={0}
-                        className="action-button"
-                        onClick={confirmDelete}
-                      >
-                        <Icons.Trash data-test="dashboard-list-trash-icon" />
-                      </span>
-                    </Tooltip>
-                  )}
-                </ConfirmStatusChange>
-              )}
-              {canExport && (
-                <Tooltip
-                  id="export-action-tooltip"
-                  title={t('Export')}
-                  placement="bottom"
-                >
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    className="action-button"
-                    onClick={handleExport}
-                  >
-                    <Icons.Share />
-                  </span>
-                </Tooltip>
-              )}
-              {canEdit && (
-                <Tooltip
-                  id="edit-action-tooltip"
-                  title={t('Edit')}
-                  placement="bottom"
-                >
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    className="action-button"
-                    onClick={handleEdit}
-                  >
-                    <Icons.EditAlt data-test="edit-alt" />
-                  </span>
-                </Tooltip>
-              )}
-            </Actions>
-          );
-        },
-        Header: t('Actions'),
-        id: 'actions',
-        hidden: !canEdit && !canDelete && !canExport,
-        disableSortBy: true,
       },
     ],
     [

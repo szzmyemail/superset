@@ -172,7 +172,7 @@ export function Menu({
   isFrontendRoute = () => false,
 }: MenuProps) {
   const [showMenu, setMenu] = useState<MenuMode>('horizontal');
-  if(menu[2]) {
+  if (menu[2]) {
     delete  menu[2].childs;
     menu[2].url = "/superset/sqllab/"
   }
@@ -180,6 +180,8 @@ export function Menu({
     delete  menu[3].childs;
     menu[3].url = "/tablemodelview/list"
   }
+  console.log('smile');
+  console.log('smile22222');
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth <= 767) {

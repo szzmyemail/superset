@@ -18,7 +18,6 @@
  */
 import {
   getChartMetadataRegistry,
-  styled,
   SupersetClient,
   t,
 } from '@superset-ui/core';
@@ -30,7 +29,6 @@ import { FeatureFlag, isFeatureEnabled } from 'src/featureFlags';
 import {
   createErrorHandler,
   createFetchRelated,
-  handleChartDelete,
 } from 'src/views/CRUD/utils';
 import {
   useChartEditModal,
@@ -122,10 +120,6 @@ interface ChartListProps {
     lastName: string;
   };
 }
-
-const Actions = styled.div`
-  color: ${({ theme }) => theme.colors.grayscale.base};
-`;
 
 function ChartList(props: ChartListProps) {
   const { addDangerToast, addSuccessToast } = props;
@@ -320,93 +314,6 @@ function ChartList(props: ChartListProps) {
         accessor: 'created_by',
         disableSortBy: true,
         size: 'xl',
-      },
-      {
-        Cell: ({ row: { original } }: any) => {
-          const handleDelete = () =>
-            handleChartDelete(
-              original,
-              addSuccessToast,
-              addDangerToast,
-              refreshData,
-            );
-          const openEditModal = () => openChartEditModal(original);
-          const handleExport = () => handleBulkChartExport([original]);
-          if (!canEdit && !canDelete && !canExport) {
-            return null;
-          }
-
-          return (
-            <Actions className="actions">
-              {canDelete && (
-                <ConfirmStatusChange
-                  title={t('Please confirm')}
-                  description={
-                    <>
-                      {t('Are you sure you want to delete')}{' '}
-                      <b>{original.slice_name}</b>?
-                    </>
-                  }
-                  onConfirm={handleDelete}
-                >
-                  {confirmDelete => (
-                    <Tooltip
-                      id="delete-action-tooltip"
-                      title={t('Delete')}
-                      placement="bottom"
-                    >
-                      <span
-                        data-test="trash"
-                        role="button"
-                        tabIndex={0}
-                        className="action-button"
-                        onClick={confirmDelete}
-                      >
-                        <Icons.Trash />
-                      </span>
-                    </Tooltip>
-                  )}
-                </ConfirmStatusChange>
-              )}
-              {canExport && (
-                <Tooltip
-                  id="export-action-tooltip"
-                  title={t('Export')}
-                  placement="bottom"
-                >
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    className="action-button"
-                    onClick={handleExport}
-                  >
-                    <Icons.Share />
-                  </span>
-                </Tooltip>
-              )}
-              {canEdit && (
-                <Tooltip
-                  id="edit-action-tooltip"
-                  title={t('Edit')}
-                  placement="bottom"
-                >
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    className="action-button"
-                    onClick={openEditModal}
-                  >
-                    <Icons.EditAlt data-test="edit-alt" />
-                  </span>
-                </Tooltip>
-              )}
-            </Actions>
-          );
-        },
-        Header: t('Actions'),
-        id: 'actions',
-        disableSortBy: true,
-        hidden: !canEdit && !canDelete,
       },
     ],
     [
