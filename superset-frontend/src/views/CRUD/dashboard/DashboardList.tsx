@@ -446,41 +446,41 @@ function DashboardList(props: DashboardListProps) {
 
   const subMenuButtons: SubMenuProps['buttons'] = [];
   if (canDelete || canExport) {
-    subMenuButtons.push({
-      name: t('Bulk select'),
-      buttonStyle: 'secondary',
-      'data-test': 'bulk-select',
-      onClick: toggleBulkSelect,
-    });
+    // subMenuButtons.push({
+    //   name: t('Bulk select'),
+    //   buttonStyle: 'secondary',
+    //   'data-test': 'bulk-select',
+    //   onClick: toggleBulkSelect,
+    // });
   }
   if (canCreate) {
-    subMenuButtons.push({
-      name: (
-        <>
-          <i className="fa fa-plus" /> {t('Dashboard')}
-        </>
-      ),
-      buttonStyle: 'primary',
-      onClick: () => {
-        window.location.assign('/dashboard/new');
-      },
-    });
-
-    if (isFeatureEnabled(FeatureFlag.VERSIONED_EXPORT)) {
-      subMenuButtons.push({
-        name: (
-          <Tooltip
-            id="import-tooltip"
-            title={t('Import dashboards')}
-            placement="bottomRight"
-          >
-            <Icons.Import data-test="import-button" />
-          </Tooltip>
-        ),
-        buttonStyle: 'link',
-        onClick: openDashboardImportModal,
-      });
-    }
+    // subMenuButtons.push({
+    //   name: (
+    //     <>
+    //       <i className="fa fa-plus" /> {t('Dashboard')}
+    //     </>
+    //   ),
+    //   buttonStyle: 'primary',
+    //   onClick: () => {
+    //     window.location.assign('/dashboard/new');
+    //   },
+    // });
+    //
+    // if (isFeatureEnabled(FeatureFlag.VERSIONED_EXPORT)) {
+    //   subMenuButtons.push({
+    //     name: (
+    //       <Tooltip
+    //         id="import-tooltip"
+    //         title={t('Import dashboards')}
+    //         placement="bottomRight"
+    //       >
+    //         <Icons.Import data-test="import-button" />
+    //       </Tooltip>
+    //     ),
+    //     buttonStyle: 'link',
+    //     onClick: openDashboardImportModal,
+    //   });
+    // }
   }
   return (
     <>
