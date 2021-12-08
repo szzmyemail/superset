@@ -180,7 +180,7 @@ export function Menu({
     delete  menu[3].childs;
     menu[3].url = "/tablemodelview/list"
   }
-  console.log('smile33333');
+  console.log('smile smile');
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth <= 767) {
