@@ -494,7 +494,7 @@ class Header extends React.PureComponent {
         data-test="dashboard-header"
         data-test-id={`${dashboardInfo.id}`}
       >
-        <a className="dashboard-return" href="/dashboard/list">Back</a>
+        {/*<a className="dashboard-return" href="/dashboard/list">Back</a>*/}
         <div className="dashboard-component-header header-large">
           <EditableTitle
             title={dashboardTitle}
