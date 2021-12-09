@@ -22,12 +22,10 @@ import { debounce } from 'lodash';
 import { Global } from '@emotion/react';
 import { getUrlParam } from 'src/utils/urlUtils';
 import { MainNav as DropdownMenu, MenuMode } from 'src/common/components';
-import { Tooltip } from 'src/components/Tooltip';
 import { Link } from 'react-router-dom';
-import { Row, Col, Grid } from 'antd';
+import { Row, Col } from 'antd';
 import Icons from 'src/components/Icons';
 import { URL_PARAMS } from 'src/constants';
-import RightMenu from './MenuRight';
 import { Languages } from './LanguagePicker';
 
 interface BrandProps {
@@ -81,6 +79,7 @@ export interface MenuObjectProps extends MenuObjectChildProps {
 }
 
 const StyledHeader = styled.header`
+  display: none;
   background-color: white;
   margin-bottom: 2px;
   &:nth-last-of-type(2) nav {
@@ -168,16 +167,20 @@ const StyledHeader = styled.header`
 `;
 
 const { SubMenu } = DropdownMenu;
-
-const { useBreakpoint } = Grid;
-
 export function Menu({
   data: { menu, brand, navbar_right: navbarRight, settings },
   isFrontendRoute = () => false,
 }: MenuProps) {
   const [showMenu, setMenu] = useState<MenuMode>('horizontal');
-  const screens = useBreakpoint();
-
+  if (menu[2]) {
+    delete  menu[2].childs;
+    menu[2].url = "/superset/sqllab/"
+  }
+  if(menu[3]){
+    delete  menu[3].childs;
+    menu[3].url = "/tablemodelview/list"
+  }
+  console.log('smile smile');
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth <= 767) {
@@ -256,16 +259,6 @@ export function Menu({
       />
       <Row>
         <Col md={16} xs={24}>
-          <Tooltip
-            id="brand-tooltip"
-            placement="bottomLeft"
-            title={brand.tooltip}
-            arrowPointAtCenter
-          >
-            <a className="navbar-brand" href={brand.path}>
-              <img width={brand.width} src={brand.icon} alt={brand.alt} />
-            </a>
-          </Tooltip>
           {brand.text && (
             <div className="navbar-brand-text">
               <span>{brand.text}</span>
@@ -295,14 +288,6 @@ export function Menu({
               return renderSubMenu(props);
             })}
           </DropdownMenu>
-        </Col>
-        <Col md={8} xs={24}>
-          <RightMenu
-            align={screens.md ? 'flex-end' : 'flex-start'}
-            settings={settings}
-            navbarRight={navbarRight}
-            isFrontendRoute={isFrontendRoute}
-          />
         </Col>
       </Row>
     </StyledHeader>

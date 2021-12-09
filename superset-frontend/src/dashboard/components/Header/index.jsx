@@ -118,6 +118,9 @@ const StyledDashboardHeader = styled.div`
   padding: 0 ${({ theme }) => theme.gridUnit * 6}px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.light2};
 
+  .dashboard-return {
+    text-decoration:none;
+  }
   .action-button > span {
     color: ${({ theme }) => theme.colors.grayscale.base};
   }
@@ -491,6 +494,7 @@ class Header extends React.PureComponent {
         data-test="dashboard-header"
         data-test-id={`${dashboardInfo.id}`}
       >
+        {/*<a className="dashboard-return" href="/dashboard/list">Back</a>*/}
         <div className="dashboard-component-header header-large">
           <EditableTitle
             title={dashboardTitle}
@@ -583,19 +587,19 @@ class Header extends React.PureComponent {
             />
           )}
 
-          {!editMode && userCanEdit && (
-            <>
-              <span
-                role="button"
-                title={t('Edit dashboard')}
-                tabIndex={0}
-                className="action-button"
-                onClick={this.toggleEditMode}
-              >
-                <Icons.EditAlt />
-              </span>
-            </>
-          )}
+          {/*{!editMode && userCanEdit && (*/}
+          {/*  <>*/}
+          {/*    <span*/}
+          {/*      role="button"*/}
+          {/*      title={t('Edit dashboard')}*/}
+          {/*      tabIndex={0}*/}
+          {/*      className="action-button"*/}
+          {/*      onClick={this.toggleEditMode}*/}
+          {/*    >*/}
+          {/*      <Icons.EditAlt />*/}
+          {/*    </span>*/}
+          {/*  </>*/}
+          {/*)}*/}
           {shouldShowReport && this.renderReportModal()}
 
           {this.state.showingPropertiesModal && (
