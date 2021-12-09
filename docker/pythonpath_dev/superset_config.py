@@ -98,31 +98,50 @@ WEBDRIVER_BASEURL = "http://superset:8088/"
 WEBDRIVER_BASEURL_USER_FRIENDLY = WEBDRIVER_BASEURL
 
 SQLLAB_CTAS_NO_LIMIT = True
+
+
 from flask_appbuilder.security.views import expose
 from superset.security import SupersetSecurityManager
 from flask_appbuilder.security.manager import BaseSecurityManager
 from flask_appbuilder.security.manager import AUTH_REMOTE_USER
+from flask_appbuilder.security.manager import AUTH_DB
 from flask import  redirect, request
 from flask_login import login_user
+from Crypto.Cipher import AES
+
+
+is_auth_db = False
 
 # Create a custom view to authenticate the user
 AuthRemoteUserView=BaseSecurityManager.authremoteuserview
 class AirbnbAuthRemoteUserView(AuthRemoteUserView):
     @expose('/login/')
     def login(self):
-      user = self.appbuilder.sm.auth_user_db(request.args.get("user"), request.args.get("pwd"))
+      #user = self.appbuilder.sm.auth_user_db(request.args.get("user"), request.args.get("pwd"))
+      user = self.appbuilder.sm.find_user(username=request.args.get("user"))
+
       login_user(user, remember=False)
       #return redirect(self.appbuilder.get_url_for_index)
       type = request.args.get("type")
       if type == "dashboard":
+        is_auth_db = False
+        AUTH_TYPE = AUTH_DB
         return redirect("/dashboard/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
       elif type == "chart":
+        is_auth_db = False
+        AUTH_TYPE = AUTH_DB
         return redirect("/chart/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
       elif type == "sqllab":
+        is_auth_db = False
+        AUTH_TYPE = AUTH_DB
         return redirect("/superset/sqllab/")
       elif type == "datasets":
+        is_auth_db = False
+        AUTH_TYPE = AUTH_DB
         return redirect("/tablemodelview/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc")
-
+      elif type == "aaa":
+        is_auth_db = True
+        AUTH_TYPE = AUTH_REMOTE_USER
 # Create a custom Security manager that override the authremoteuserview with the one I've created
 class CustomSecurityManager(SupersetSecurityManager):
     authremoteuserview = AirbnbAuthRemoteUserView
@@ -130,7 +149,6 @@ class CustomSecurityManager(SupersetSecurityManager):
 # Use my custom authenticator
 CUSTOM_SECURITY_MANAGER = CustomSecurityManager
 
-# User remote authentication
 AUTH_TYPE = AUTH_REMOTE_USER
 #
 # Optionally import superset_config_docker.py (which will have been included on
