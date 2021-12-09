@@ -100,6 +100,8 @@ setup(
         "python-geohash",
         "pyarrow>=5.0.0, <6.0",
         "pyyaml>=5.4",
+        "pymysql==1.0.2",
+        "pinotdb==0.3.7",
         "PyJWT>=1.7.1, <2",
         "redis",
         "selenium>=3.141.0",

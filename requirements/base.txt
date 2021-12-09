@@ -291,7 +291,6 @@ yarl==1.6.3
     # via aiohttp
 zipp==3.4.1
     # via -r requirements/base.in
-pymysql==1.0.2
-pinotdb==0.3.7
+
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
