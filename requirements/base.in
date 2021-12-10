@@ -19,3 +19,5 @@
 pyrsistent>=0.16.1,<0.17
 zipp==3.4.1
 sasl==0.3.1
+pymysql==1.0.2
+pinotdb==0.3.7

@@ -16,6 +16,4 @@
 #
 -r base.in
 gevent
-pymysql==1.0.2
-pinotdb==0.3.7
 psycopg2-binary
