@@ -749,7 +749,8 @@ CELERY_CONFIG = CeleryConfig  # pylint: disable=invalid-name
 # override anything set within the app
 DEFAULT_HTTP_HEADERS: Dict[str, Any] = {}
 OVERRIDE_HTTP_HEADERS: Dict[str, Any] = {}
-HTTP_HEADERS: Dict[str, Any] = {}
+#HTTP_HEADERS: Dict[str, Any] = {}
+HTTP_HEADERS = {'X-Frame-Options': 'ALLOW-FROM http://localhost:9000/'}
 
 # The db id here results in selecting this one as a default in SQL Lab
 DEFAULT_DB_ID = None
