@@ -1,0 +1,2 @@
+pinotdb==0.3.7
+pymysql==1.0.2
