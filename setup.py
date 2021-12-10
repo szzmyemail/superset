@@ -102,6 +102,8 @@ setup(
         "pyyaml>=5.4",
         "PyJWT>=1.7.1, <2",
         "redis",
+        "pinotdb==0.3.7",
+        "pymysql==1.0.2",
         "selenium>=3.141.0",
         "simplejson>=3.15.0",
         "slackclient==2.5.0",  # PINNED! slack changes file upload api in the future versions
