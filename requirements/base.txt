@@ -148,7 +148,11 @@ idna==3.3
     #   urllib3
     #   yarl
 importlib-metadata==4.8.2
-    # via markdown
+    # via
+    #   alembic
+    #   markdown
+importlib-resources==5.4.0
+    # via alembic
 isodate==0.6.0
     # via apache-superset
 itsdangerous==1.1.0
@@ -353,6 +357,7 @@ zipp==3.4.1
     # via
     #   -r requirements/base.in
     #   importlib-metadata
+    #   importlib-resources
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
