@@ -107,7 +107,6 @@ from flask_appbuilder.security.manager import AUTH_REMOTE_USER
 from flask_appbuilder.security.manager import AUTH_DB
 from flask import  redirect, request
 from flask_login import login_user
-from Crypto.Cipher import AES
 
 
 is_auth_db = False
