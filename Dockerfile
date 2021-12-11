@@ -40,6 +40,9 @@ RUN cd /app \
     && mkdir -p superset/static \
     && touch superset/static/version_info.json \
     && pip install --no-cache -r requirements/local.txt
+    && pip install pinotdb==0.3.7
+    && pip install pymysql==1.0.2
+
 
 
 ######################################################################
