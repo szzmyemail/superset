@@ -292,7 +292,7 @@ AUTH_TYPE = AUTH_DB
 # Grant public role the same set of permissions as for a selected builtin role.
 # This is useful if one wants to enable anonymous users to view
 # dashboards. Explicit grant on specific datasets is still required.
-PUBLIC_ROLE_LIKE: Optional[str] = "Gamma"
+PUBLIC_ROLE_LIKE: Optional[str] = None
 
 # ---------------------------------------------------
 # Babel config for translations
@@ -750,7 +750,6 @@ CELERY_CONFIG = CeleryConfig  # pylint: disable=invalid-name
 DEFAULT_HTTP_HEADERS: Dict[str, Any] = {}
 OVERRIDE_HTTP_HEADERS: Dict[str, Any] = {}
 HTTP_HEADERS: Dict[str, Any] = {}
-#HTTP_HEADERS = {'X-Frame-Options': 'ALLOW-FROM http://localhost:9000/'}
 
 # The db id here results in selecting this one as a default in SQL Lab
 DEFAULT_DB_ID = None
