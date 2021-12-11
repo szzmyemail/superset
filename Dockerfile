@@ -16,6 +16,16 @@
 #
 
 ######################################################################
+# Dev image...
+######################################################################
+FROM apache/superset:latest-dev AS apache/superset:latest-dev-pda
+USER root
+RUN pip install pymysql==1.0.2
+RUN pip install pinotdb==0.3.7
+USER superset
+
+
+######################################################################
 # PY stage that simply does a pip install on our requirements
 ######################################################################
 ARG PY_VER=3.8.12
@@ -40,8 +50,6 @@ RUN cd /app \
     && mkdir -p superset/static \
     && touch superset/static/version_info.json \
     && pip install --no-cache -r requirements/local.txt
-    && pip install pinotdb==0.3.7
-    && pip install pymysql==1.0.2
 
 
 
@@ -168,11 +176,4 @@ RUN chmod a+x /app/docker/*.sh
 CMD /app/docker/docker-ci.sh
 
 
-######################################################################
-# Dev image...
-######################################################################
-FROM apache/superset:latest-dev
-USER root
-RUN pip install pymysql==1.0.2
-RUN pip install pinotdb==0.3.7
-USER superset
+
