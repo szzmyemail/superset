@@ -166,3 +166,13 @@ COPY --chown=superset ./docker/docker-ci.sh /app/docker/
 RUN chmod a+x /app/docker/*.sh
 
 CMD /app/docker/docker-ci.sh
+
+
+######################################################################
+# Dev image...
+######################################################################
+FROM apache/superset:latest-dev AS apache/superset:latest-dev-pda
+USER root
+RUN pip install pymysql==1.0.2
+RUN pip install pinotdb==0.3.7
+USER superset
