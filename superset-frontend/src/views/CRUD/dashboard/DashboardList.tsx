@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { SupersetClient, t } from '@superset-ui/core';
+import { styled, SupersetClient, t } from '@superset-ui/core';
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import rison from 'rison';
@@ -24,6 +24,7 @@ import { isFeatureEnabled, FeatureFlag } from 'src/featureFlags';
 import {
   createFetchRelated,
   createErrorHandler,
+  handleDashboardDelete,
 } from 'src/views/CRUD/utils';
 import { useListViewResource, useFavoriteStatus } from 'src/views/CRUD/hooks';
 import ConfirmStatusChange from 'src/components/ConfirmStatusChange';
@@ -40,10 +41,10 @@ import { getFromLocalStorage } from 'src/utils/localStorageHelpers';
 import Owner from 'src/types/Owner';
 import withToasts from 'src/components/MessageToasts/withToasts';
 import FacePile from 'src/components/FacePile';
-// import Icons from 'src/components/Icons';
+import Icons from 'src/components/Icons';
 import FaveStar from 'src/components/FaveStar';
 import PropertiesModal from 'src/dashboard/components/PropertiesModal';
-// import { Tooltip } from 'src/components/Tooltip';
+import { Tooltip } from 'src/components/Tooltip';
 import ImportModelsModal from 'src/components/ImportModal/index';
 import OmniContainer from 'src/components/OmniContainer';
 
@@ -54,15 +55,15 @@ import { DashboardStatus } from './types';
 const PAGE_SIZE = 25;
 const PASSWORDS_NEEDED_MESSAGE = t(
   'The passwords for the databases below are needed in order to ' +
-    'import them together with the dashboards. Please note that the ' +
-    '"Secure Extra" and "Certificate" sections of ' +
-    'the database configuration are not present in export files, and ' +
-    'should be added manually after the import if they are needed.',
+  'import them together with the dashboards. Please note that the ' +
+  '"Secure Extra" and "Certificate" sections of ' +
+  'the database configuration are not present in export files, and ' +
+  'should be added manually after the import if they are needed.',
 );
 const CONFIRM_OVERWRITE_MESSAGE = t(
   'You are importing one or more dashboards that already exist. ' +
-    'Overwriting might cause you to lose some of your work. Are you ' +
-    'sure you want to overwrite?',
+  'Overwriting might cause you to lose some of your work. Are you ' +
+  'sure you want to overwrite?',
 );
 
 interface DashboardListProps {
@@ -88,6 +89,10 @@ interface Dashboard {
   owners: Owner[];
   created_by: object;
 }
+
+const Actions = styled.div`
+  color: ${({ theme }) => theme.colors.grayscale.base};
+`;
 
 function DashboardList(props: DashboardListProps) {
   const { addDangerToast, addSuccessToast } = props;
@@ -223,54 +228,54 @@ function DashboardList(props: DashboardListProps) {
     () => [
       ...(props.user.userId
         ? [
-            {
-              Cell: ({
-                row: {
-                  original: { id },
-                },
-              }: any) => (
-                <FaveStar
-                  itemId={id}
-                  saveFaveStar={saveFavoriteStatus}
-                  isStarred={favoriteStatus[id]}
-                />
-              ),
-              Header: '',
-              id: 'id',
-              disableSortBy: true,
-              size: 'xs',
-            },
-          ]
+          {
+            Cell: ({
+                     row: {
+                       original: { id },
+                     },
+                   }: any) => (
+              <FaveStar
+                itemId={id}
+                saveFaveStar={saveFavoriteStatus}
+                isStarred={favoriteStatus[id]}
+              />
+            ),
+            Header: '',
+            id: 'id',
+            disableSortBy: true,
+            size: 'xs',
+          },
+        ]
         : []),
       {
         Cell: ({
-          row: {
-            original: { url, dashboard_title: dashboardTitle },
-          },
-        }: any) => <Link to={url}>{dashboardTitle}</Link>,
+                 row: {
+                   original: { url, dashboard_title: dashboardTitle },
+                 },
+               }: any) => <Link to={url}>{dashboardTitle}</Link>,
         Header: t('Title'),
         accessor: 'dashboard_title',
       },
 
       {
         Cell: ({
-          row: {
-            original: {
-              changed_by_name: changedByName,
-              changed_by_url: changedByUrl,
-            },
-          },
-        }: any) => <a href={changedByUrl}>{changedByName}</a>,
+                 row: {
+                   original: {
+                     changed_by_name: changedByName,
+                     changed_by_url: changedByUrl,
+                   },
+                 },
+               }: any) => <a href={changedByUrl}>{changedByName}</a>,
         Header: t('Modified by'),
         accessor: 'changed_by.first_name',
         size: 'xl',
       },
       {
         Cell: ({
-          row: {
-            original: { status },
-          },
-        }: any) =>
+                 row: {
+                   original: { status },
+                 },
+               }: any) =>
           status === DashboardStatus.PUBLISHED ? t('Published') : t('Draft'),
         Header: t('Status'),
         accessor: 'published',
@@ -278,20 +283,20 @@ function DashboardList(props: DashboardListProps) {
       },
       {
         Cell: ({
-          row: {
-            original: { changed_on_delta_humanized: changedOn },
-          },
-        }: any) => <span className="no-wrap">{changedOn}</span>,
+                 row: {
+                   original: { changed_on_delta_humanized: changedOn },
+                 },
+               }: any) => <span className="no-wrap">{changedOn}</span>,
         Header: t('Modified'),
         accessor: 'changed_on_delta_humanized',
         size: 'xl',
       },
       {
         Cell: ({
-          row: {
-            original: { created_by: createdBy },
-          },
-        }: any) =>
+                 row: {
+                   original: { created_by: createdBy },
+                 },
+               }: any) =>
           createdBy ? `${createdBy.first_name} ${createdBy.last_name}` : '',
         Header: t('Created by'),
         accessor: 'created_by',
@@ -300,14 +305,97 @@ function DashboardList(props: DashboardListProps) {
       },
       {
         Cell: ({
-          row: {
-            original: { owners = [] },
-          },
-        }: any) => <FacePile users={owners} />,
+                 row: {
+                   original: { owners = [] },
+                 },
+               }: any) => <FacePile users={owners} />,
         Header: t('Owners'),
         accessor: 'owners',
         disableSortBy: true,
         size: 'xl',
+      },
+      {
+        Cell: ({ row: { original } }: any) => {
+          const handleDelete = () =>
+            handleDashboardDelete(
+              original,
+              refreshData,
+              addSuccessToast,
+              addDangerToast,
+            );
+          const handleEdit = () => openDashboardEditModal(original);
+          const handleExport = () => handleBulkDashboardExport([original]);
+
+          return (
+            <Actions className="actions">
+              {canDelete && (
+                <ConfirmStatusChange
+                  title={t('Please confirm')}
+                  description={
+                    <>
+                      {t('Are you sure you want to delete')}{' '}
+                      <b>{original.dashboard_title}</b>?
+                    </>
+                  }
+                  onConfirm={handleDelete}
+                >
+                  {confirmDelete => (
+                    <Tooltip
+                      id="delete-action-tooltip"
+                      title={t('Delete')}
+                      placement="bottom"
+                    >
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        className="action-button"
+                        onClick={confirmDelete}
+                      >
+                        <Icons.Trash data-test="dashboard-list-trash-icon" />
+                      </span>
+                    </Tooltip>
+                  )}
+                </ConfirmStatusChange>
+              )}
+              {canExport && (
+                <Tooltip
+                  id="export-action-tooltip"
+                  title={t('Export')}
+                  placement="bottom"
+                >
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className="action-button"
+                    onClick={handleExport}
+                  >
+                    <Icons.Share />
+                  </span>
+                </Tooltip>
+              )}
+              {canEdit && (
+                <Tooltip
+                  id="edit-action-tooltip"
+                  title={t('Edit')}
+                  placement="bottom"
+                >
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className="action-button"
+                    onClick={handleEdit}
+                  >
+                    <Icons.EditAlt data-test="edit-alt" />
+                  </span>
+                </Tooltip>
+              )}
+            </Actions>
+          );
+        },
+        Header: t('Actions'),
+        id: 'actions',
+        hidden: !canEdit && !canDelete && !canExport,
+        disableSortBy: true,
       },
     ],
     [
@@ -446,41 +534,41 @@ function DashboardList(props: DashboardListProps) {
 
   const subMenuButtons: SubMenuProps['buttons'] = [];
   if (canDelete || canExport) {
-    // subMenuButtons.push({
-    //   name: t('Bulk select'),
-    //   buttonStyle: 'secondary',
-    //   'data-test': 'bulk-select',
-    //   onClick: toggleBulkSelect,
-    // });
+    subMenuButtons.push({
+      name: t('Bulk select'),
+      buttonStyle: 'secondary',
+      'data-test': 'bulk-select',
+      onClick: toggleBulkSelect,
+    });
   }
   if (canCreate) {
-    // subMenuButtons.push({
-    //   name: (
-    //     <>
-    //       <i className="fa fa-plus" /> {t('Dashboard')}
-    //     </>
-    //   ),
-    //   buttonStyle: 'primary',
-    //   onClick: () => {
-    //     window.location.assign('/dashboard/new');
-    //   },
-    // });
-    //
-    // if (isFeatureEnabled(FeatureFlag.VERSIONED_EXPORT)) {
-    //   subMenuButtons.push({
-    //     name: (
-    //       <Tooltip
-    //         id="import-tooltip"
-    //         title={t('Import dashboards')}
-    //         placement="bottomRight"
-    //       >
-    //         <Icons.Import data-test="import-button" />
-    //       </Tooltip>
-    //     ),
-    //     buttonStyle: 'link',
-    //     onClick: openDashboardImportModal,
-    //   });
-    // }
+    subMenuButtons.push({
+      name: (
+        <>
+          <i className="fa fa-plus" /> {t('Dashboard')}
+        </>
+      ),
+      buttonStyle: 'primary',
+      onClick: () => {
+        window.location.assign('/dashboard/new');
+      },
+    });
+
+    if (isFeatureEnabled(FeatureFlag.VERSIONED_EXPORT)) {
+      subMenuButtons.push({
+        name: (
+          <Tooltip
+            id="import-tooltip"
+            title={t('Import dashboards')}
+            placement="bottomRight"
+          >
+            <Icons.Import data-test="import-button" />
+          </Tooltip>
+        ),
+        buttonStyle: 'link',
+        onClick: openDashboardImportModal,
+      });
+    }
   }
   return (
     <>
