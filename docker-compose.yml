@@ -17,7 +17,7 @@
 x-superset-image: &superset-image apache/superset:latest-dev-pda
 x-superset-user: &superset-user root
 x-superset-depends-on: &superset-depends-on
-  - db
+#  - db
   - redis
 x-superset-volumes: &superset-volumes
   # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
@@ -38,18 +38,18 @@ services:
     volumes:
       - redis:/data
 
-  db:
-    env_file: ./docker/.env
-    image: mysql:8.0.26
-    container_name: superset_db
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:3306:3306"
-    volumes:
-      - /vdb/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: kevin123
-      MYSQL_DATABASE: superset
+#  db:
+#    env_file: ./docker/.env
+#    image: mysql:8.0.26
+#    container_name: superset_db
+#    restart: unless-stopped
+#    ports:
+#      - "127.0.0.1:3306:3306"
+#    volumes:
+#      - /vdb/mysql:/var/lib/mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: kevin123
+#      MYSQL_DATABASE: superset
 
   superset:
     env_file: docker/.env
