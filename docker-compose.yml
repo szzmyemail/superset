@@ -36,7 +36,7 @@ services:
     container_name: superset_db
     restart: unless-stopped
     ports:
-      - "127.0.0.1:3306:3306"
+      - "0.0.0.0:3306:3306"
     volumes:
       - /vdb/mysql:/var/lib/mysql
     environment:
