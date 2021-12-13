@@ -75,7 +75,7 @@ services:
       - /home/superset-websocket/node_modules
       - /home/superset-websocket/dist
     environment:
-      - PORT=9000
+      - PORT=8088
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_SSL=false
