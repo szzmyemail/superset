@@ -56,7 +56,7 @@ services:
     build: ./superset-websocket
     image: superset-websocket
     ports:
-      - 9000:9000
+      - 8080:8080
     depends_on:
       - redis
     # Mount everything in superset-websocket into container and
