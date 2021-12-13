@@ -29,6 +29,20 @@ x-superset-volumes: &superset-volumes
 
 version: "3.7"
 services:
+
+  db:
+    env_file: ./docker/.env
+    image: mysql:8.0.26
+    container_name: superset_db
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - /vdb/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: kevin123
+      MYSQL_DATABASE: superset
+
   redis:
     image: redis:latest
     container_name: superset_cache
@@ -38,18 +52,6 @@ services:
     volumes:
       - redis:/data
 
-#  db:
-#    env_file: ./docker/.env
-#    image: mysql:8.0.26
-#    container_name: superset_db
-#    restart: unless-stopped
-#    ports:
-#      - "127.0.0.1:3306:3306"
-#    volumes:
-#      - /vdb/mysql:/var/lib/mysql
-#    environment:
-#      MYSQL_ROOT_PASSWORD: kevin123
-#      MYSQL_DATABASE: superset
 
   superset:
     env_file: docker/.env
