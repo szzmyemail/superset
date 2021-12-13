@@ -31,7 +31,7 @@ version: "3.7"
 services:
 
   db:
-    env_file: ./docker/.env
+#    env_file: ./docker/.env
     image: mysql:8.0.26
     container_name: superset_db
     restart: unless-stopped
