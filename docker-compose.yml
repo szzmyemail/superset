@@ -48,8 +48,8 @@ services:
     volumes:
       - /vdb/mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_ROOT_PASSWORD: kevin123
+      MYSQL_DATABASE: superset
 
   superset:
     env_file: docker/.env
