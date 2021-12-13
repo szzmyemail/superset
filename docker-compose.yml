@@ -40,8 +40,9 @@ services:
     volumes:
       - /vdb/mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: kevin123
       MYSQL_DATABASE: superset
+      MYSQL_ROOT_PASSWORD: kevin123
+
 
   redis:
     image: redis:latest
