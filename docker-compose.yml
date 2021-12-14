@@ -99,7 +99,7 @@ services:
   superset-init:
     image: *superset-image
     container_name: superset_init
-    command: ["/app/docker/wait-for-mysql.sh", "127.0.0.1", "/app/docker/docker-init.sh"]
+    command: ["/app/docker/wait-for-mysql.sh", "0.0.0.0", "/app/docker/docker-init.sh"]
     env_file: docker/.env
     depends_on: *superset-depends-on
     user: *superset-user
