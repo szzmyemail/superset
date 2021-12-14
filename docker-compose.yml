@@ -31,7 +31,7 @@ version: "3.7"
 services:
 
   db:
-#    env_file: ./docker/.env
+    env_file: ./docker/.env
     image: mysql:8.0.26
     container_name: superset_db
     restart: unless-stopped
@@ -39,10 +39,6 @@ services:
       - "0.0.0.0:3306:3306"
     volumes:
       - /vdb/mysql:/var/lib/mysql
-    environment:
-      MYSQL_DATABASE: superset
-      MYSQL_ROOT_PASSWORD: kevin123
-
 
   redis:
     image: redis:latest
@@ -52,7 +48,6 @@ services:
       - "127.0.0.1:6379:6379"
     volumes:
       - redis:/data
-
 
   superset:
     env_file: docker/.env
@@ -100,7 +95,6 @@ services:
     image: *superset-image
     container_name: superset_init
     command: ["/app/docker/wait-for-mysql.sh", "superset_db", "/app/docker/docker-init.sh"]
-#    command: ["/app/docker/docker-init.sh"]
     env_file: docker/.env
     depends_on: *superset-depends-on
     user: *superset-user
