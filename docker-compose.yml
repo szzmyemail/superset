@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-x-superset-image: &superset-image apache/superset:latest-dev-pda
+x-superset-image: &superset-image registry-qa.webex.com/superset/superset:v0.0.1
 x-superset-user: &superset-user root
 x-superset-depends-on: &superset-depends-on
   - db
@@ -35,7 +35,7 @@ services:
     image: mysql:8.0.26
     container_name: superset_db
     restart: unless-stopped
-    cap_add:
+    cap_add:               # fix mbind: Operation not permitted
       - SYS_NICE
     ports:
       - "0.0.0.0:3306:3306"
