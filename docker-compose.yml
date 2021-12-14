@@ -17,6 +17,7 @@
 x-superset-image: &superset-image apache/superset:latest-dev-pda
 x-superset-user: &superset-user root
 x-superset-depends-on: &superset-depends-on
+  - db
   - redis
 x-superset-volumes: &superset-volumes
   # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
@@ -28,6 +29,21 @@ x-superset-volumes: &superset-volumes
 
 version: "3.7"
 services:
+
+  db:
+#    env_file: ./docker/.env
+    image: mysql:8.0.26
+    container_name: superset_db
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:3306:3306"
+    volumes:
+      - /vdb/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: superset
+      MYSQL_ROOT_PASSWORD: kevin123
+
+
   redis:
     image: redis:latest
     container_name: superset_cache
@@ -36,6 +52,7 @@ services:
       - "127.0.0.1:6379:6379"
     volumes:
       - redis:/data
+
 
   superset:
     env_file: docker/.env
@@ -49,7 +66,7 @@ services:
     depends_on: *superset-depends-on
     volumes: *superset-volumes
     environment:
-      CYPRESS_CONFIG: "${CYPRESS_CONFIG}"
+      CYPRESS_CONFIG: ${CYPRESS_CONFIG}
 
   superset-websocket:
     container_name: superset_websocket
@@ -82,7 +99,8 @@ services:
   superset-init:
     image: *superset-image
     container_name: superset_init
-    command: ["/app/docker/docker-init.sh"]
+    command: ["/app/docker/wait-for-mysql.sh", "superset_db", "/app/docker/docker-init.sh"]
+#    command: ["/app/docker/docker-init.sh"]
     env_file: docker/.env
     depends_on: *superset-depends-on
     user: *superset-user
@@ -127,8 +145,8 @@ services:
     command: ["/app/docker/docker-bootstrap.sh", "worker"]
     env_file: docker/.env
     environment:
-      DATABASE_HOST: localhost
-      DATABASE_DB: test
+      DATABASE_HOST: 0.0.0.0
+      DATABASE_DB: superset
       REDIS_CELERY_DB: 2
       REDIS_RESULTS_DB: 3
       REDIS_HOST: localhost
