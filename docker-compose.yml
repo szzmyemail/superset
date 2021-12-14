@@ -99,7 +99,8 @@ services:
   superset-init:
     image: *superset-image
     container_name: superset_init
-    command: ["/app/docker/wait-for-mysql.sh", "0.0.0.0", "/app/docker/docker-init.sh"]
+#    command: ["/app/docker/wait-for-mysql.sh", "0.0.0.0", "/app/docker/docker-init.sh"]
+    command: ["/app/docker/docker-init.sh"]
     env_file: docker/.env
     depends_on: *superset-depends-on
     user: *superset-user
@@ -145,7 +146,7 @@ services:
     env_file: docker/.env
     environment:
       DATABASE_HOST: localhost
-      DATABASE_DB: test
+      DATABASE_DB: superset
       REDIS_CELERY_DB: 2
       REDIS_RESULTS_DB: 3
       REDIS_HOST: localhost
