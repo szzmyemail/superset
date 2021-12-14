@@ -27,10 +27,10 @@ def ping() -> FlaskResponse:
 @talisman(force_https=False)
 @app.route("/healthcheck")
 def healthcheck() -> FlaskResponse:
-    return "OK"
+    return "OKOKOK"
 
 
 @talisman(force_https=False)
 @app.route("/health")
 def health() -> FlaskResponse:
-    return "OK"
+    return "OKOKOK"
