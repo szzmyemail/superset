@@ -145,7 +145,7 @@ services:
     command: ["/app/docker/docker-bootstrap.sh", "worker"]
     env_file: docker/.env
     environment:
-      DATABASE_HOST: localhost
+      DATABASE_HOST: 0.0.0.0
       DATABASE_DB: superset
       REDIS_CELERY_DB: 2
       REDIS_RESULTS_DB: 3
