@@ -35,10 +35,13 @@ services:
     image: mysql:8.0.26
     container_name: superset_db
     restart: unless-stopped
+    cap_add:
+      - SYS_NICE
     ports:
       - "0.0.0.0:3306:3306"
     volumes:
       - /vdb/mysql:/var/lib/mysql
+
 
   redis:
     image: redis:latest
