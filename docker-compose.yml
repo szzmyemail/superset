@@ -40,7 +40,7 @@ services:
     ports:
       - "0.0.0.0:3306:3306"
     volumes:
-      - /vdb/mysql:/var/lib/mysql
+      - /Users/lilysong/Documents/project/vdb/mysql:/var/lib/mysql
 
 
   redis:
