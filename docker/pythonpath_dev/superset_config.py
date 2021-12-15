@@ -103,11 +103,8 @@ from superset.security import SupersetSecurityManager
 from flask_appbuilder.security.manager import BaseSecurityManager
 from flask_appbuilder.security.manager import AUTH_REMOTE_USER
 from flask_appbuilder.security.manager import AUTH_DB
-from flask import  redirect, request
+from flask import  redirect, request, url_for
 from flask_login import login_user
-
-
-is_auth_db = False
 
 # Create a custom view to authenticate the user
 AuthRemoteUserView=BaseSecurityManager.authremoteuserview
@@ -121,24 +118,14 @@ class AirbnbAuthRemoteUserView(AuthRemoteUserView):
       #return redirect(self.appbuilder.get_url_for_index)
       type = request.args.get("type")
       if type == "dashboard":
-        is_auth_db = False
-        AUTH_TYPE = AUTH_DB
-        return redirect("/dashboard/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
+        #return redirect("/dashboard/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
+        return redirect(url_for('DashboardModelView.list', _scheme="http", _external=True))
       elif type == "chart":
-        is_auth_db = False
-        AUTH_TYPE = AUTH_DB
         return redirect("/chart/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
       elif type == "sqllab":
-        is_auth_db = False
-        AUTH_TYPE = AUTH_DB
         return redirect("/superset/sqllab/")
       elif type == "datasets":
-        is_auth_db = False
-        AUTH_TYPE = AUTH_DB
         return redirect("/tablemodelview/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc")
-      elif type == "aaa":
-        is_auth_db = True
-        AUTH_TYPE = AUTH_REMOTE_USER
 # Create a custom Security manager that override the authremoteuserview with the one I've created
 class CustomSecurityManager(SupersetSecurityManager):
     authremoteuserview = AirbnbAuthRemoteUserView
