@@ -119,7 +119,7 @@ class AirbnbAuthRemoteUserView(AuthRemoteUserView):
       type = request.args.get("type")
       if type == "dashboard":
         #return redirect("/dashboard/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
-        return redirect(url_for('DashboardModelView.list', _scheme="http", _external=True))
+        return redirect(url_for('DashboardModelView.list', _scheme="https", _external=True))
       elif type == "chart":
         return redirect("/chart/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
       elif type == "sqllab":
