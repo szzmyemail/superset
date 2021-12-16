@@ -121,11 +121,11 @@ class AirbnbAuthRemoteUserView(AuthRemoteUserView):
         #return redirect("/dashboard/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
         return redirect(url_for('DashboardModelView.list', _scheme="https", _external=True))
       elif type == "chart":
-        return redirect("/chart/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc&viewMode=table")
+        return redirect(url_for('SliceModelView.list', _scheme="https", _external=True))
       elif type == "sqllab":
-        return redirect("/superset/sqllab/")
+        return redirect(url_for('Superset.sqllab', _scheme="https", _external=True))
       elif type == "datasets":
-        return redirect("/tablemodelview/list/?pageIndex=0&sortColumn=changed_on_delta_humanized&sortOrder=desc")
+        return redirect((url_for('TableModelView.list', _scheme="https", _external=True)))
 # Create a custom Security manager that override the authremoteuserview with the one I've created
 class CustomSecurityManager(SupersetSecurityManager):
     authremoteuserview = AirbnbAuthRemoteUserView
