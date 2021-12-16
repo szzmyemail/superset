@@ -125,10 +125,9 @@ class HeaderActionsDropdown extends React.PureComponent {
         this.setState({ cssTemplates });
       })
       .catch(() => {
-        console.log(123, 'css error');
-        // this.props.addDangerToast(
-        //   t('An error occurred while fetching available CSS templates'),
-        // );
+        this.props.addDangerToast(
+          t('An error occurred while fetching available CSS templates'),
+        );
       });
   }
 
