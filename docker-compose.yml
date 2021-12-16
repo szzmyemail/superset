@@ -59,7 +59,7 @@ services:
     command: ["/app/docker/docker-bootstrap.sh", "app"]
     restart: unless-stopped
     ports:
-      - 9000:9000
+      - 8088:8088
     user: *superset-user
     depends_on: *superset-depends-on
     volumes: *superset-volumes
@@ -89,7 +89,7 @@ services:
       - /home/superset-websocket/node_modules
       - /home/superset-websocket/dist
     environment:
-      - PORT=9000
+      - PORT=8088
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_SSL=false

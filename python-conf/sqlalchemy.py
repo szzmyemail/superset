@@ -329,7 +329,7 @@ class PinotDialect(default.DefaultDialect):
     def create_connect_args(self, url):
         kwargs = {
             "host": url.host,
-            "port": url.port or 9000,
+            "port": url.port or 8088,
             "path": url.database,
             "scheme": self.scheme,
             "username": url.username,
