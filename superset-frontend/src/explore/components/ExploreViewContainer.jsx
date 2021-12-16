@@ -112,6 +112,9 @@ const Styles = styled.div`
     padding: 0;
   }
   .title-container {
+    // .dashboard-return {
+    //   text-decoration:none;
+    // }
     position: relative;
     display: flex;
     flex-direction: row;
@@ -491,6 +494,7 @@ function ExploreViewContainer(props) {
         }
       >
         <div className="title-container">
+          {/*<a className="dashboard-return" href="/chart/list">Back</a>*/}
           <span className="horizont al-text">{t('Dataset')}</span>
           <span
             role="button"
