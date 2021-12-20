@@ -81,7 +81,6 @@ export interface MenuObjectProps extends MenuObjectChildProps {
 }
 
 const StyledHeader = styled.header`
-  display: none;
   background-color: white;
   margin-bottom: 2px;
   &:nth-last-of-type(2) nav {
