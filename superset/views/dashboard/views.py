@@ -122,7 +122,7 @@ class Dashboard(BaseSupersetView):
         db.session.add(new_dashboard)
         db.session.commit()
         #return redirect(f"/superset/dashboard/{new_dashboard.id}/?edit=true")
-        return redirect(url_for(f"Superset.dashboard", dashboard_id_or_slug=new_dashboard.id, edit=True, _scheme="http", _external=True))
+        return redirect(url_for("Superset.dashboard", dashboard_id_or_slug=new_dashboard.id, edit='true', _scheme="http", _external=True))
 
 
 class DashboardModelViewAsync(DashboardModelView):  # pylint: disable=too-many-ancestors
