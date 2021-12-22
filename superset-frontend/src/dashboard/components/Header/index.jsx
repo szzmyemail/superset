@@ -118,11 +118,14 @@ const StyledDashboardHeader = styled.div`
   padding: 0 ${({ theme }) => theme.gridUnit * 6}px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.light2};
 
-  .dashboard-return.fa-chevron-left:before {
+  .dashboard-return.fa-chevron-left {
     font-size: 18px;
     line-height: 34px;
     margin-right: 15px;
     color: #1A85A0;
+  }
+  .dashboard-return.fa-chevron-left:hover {
+    cursor: pointer;
   }
   .action-button > span {
     color: ${({ theme }) => theme.colors.grayscale.base};
