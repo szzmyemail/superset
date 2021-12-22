@@ -40,9 +40,9 @@ services:
     ports:
       - "0.0.0.0:3306:3306"
     volumes:
-      - /vdb/mysql:/var/lib/mysql
-#      - /vdb/mysql/conf:/etc/mysql/conf.d
-#      - /vdb/mysql/my.cnf:/etc/mysql/my.cnf
+      - /vdb/mysql/data:/var/lib/mysql
+      - /vdb/mysql/conf:/etc/mysql/conf.d
+      - /vdb/mysql/my.cnf:/etc/mysql/my.cnf
 
 
   redis:
