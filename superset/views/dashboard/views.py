@@ -17,7 +17,7 @@
 import re
 from typing import List, Union
 
-from flask import g, redirect, request, Response
+from flask import g, redirect, request, Response, url_for
 from flask_appbuilder import expose
 from flask_appbuilder.actions import action
 from flask_appbuilder.models.sqla.interface import SQLAInterface
@@ -121,7 +121,8 @@ class Dashboard(BaseSupersetView):
         )
         db.session.add(new_dashboard)
         db.session.commit()
-        return redirect(f"/superset/dashboard/{new_dashboard.id}/?edit=true")
+        #return redirect(f"/superset/dashboard/{new_dashboard.id}/?edit=true")
+        return redirect(url_for(f"Superset.dashboard", dashboard_id_or_slug=new_dashboard.id, edit='true', _scheme="https", _external=True))
 
 
 class DashboardModelViewAsync(DashboardModelView):  # pylint: disable=too-many-ancestors
