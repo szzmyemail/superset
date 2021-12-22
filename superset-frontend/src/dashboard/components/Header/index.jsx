@@ -118,8 +118,11 @@ const StyledDashboardHeader = styled.div`
   padding: 0 ${({ theme }) => theme.gridUnit * 6}px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.light2};
 
-  .dashboard-return {
-    text-decoration:none;
+  .dashboard-return.fa-chevron-left:before {
+    font-size: 18px;
+    line-height: 34px;
+    margin-right: 15px;
+    color: #1A85A0;
   }
   .action-button > span {
     color: ${({ theme }) => theme.colors.grayscale.base};
@@ -168,6 +171,7 @@ class Header extends React.PureComponent {
     this.showReportModal = this.showReportModal.bind(this);
     this.hideReportModal = this.hideReportModal.bind(this);
     this.renderReportModal = this.renderReportModal.bind(this);
+    this.handleBackToDashboardList = this.handleBackToDashboardList.bind(this);
   }
 
   componentDidMount() {
@@ -235,6 +239,10 @@ class Header extends React.PureComponent {
       updateDashboardTitle(nextText);
       onChange();
     }
+  }
+
+  handleBackToDashboardList() {
+    window.location.assign('/dashboard/list/');
   }
 
   handleCtrlY() {
@@ -494,8 +502,8 @@ class Header extends React.PureComponent {
         data-test="dashboard-header"
         data-test-id={`${dashboardInfo.id}`}
       >
-        <a className="dashboard-return" href="/dashboard/list">Back</a>
         <div className="dashboard-component-header header-large">
+          <i className="dashboard-return fa fa-chevron-left" aria-hidden="true" onClick={this.handleBackToDashboardList}></i>
           <EditableTitle
             title={dashboardTitle}
             canEdit={userCanEdit && editMode}
