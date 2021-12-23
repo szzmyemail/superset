@@ -122,7 +122,7 @@ const StyledDashboardHeader = styled.div`
     font-size: 18px;
     line-height: 34px;
     margin-right: 15px;
-    color: #1A85A0;
+    color: #1a85a0;
   }
   .dashboard-return.fa-chevron-left:hover {
     cursor: pointer;
@@ -174,7 +174,6 @@ class Header extends React.PureComponent {
     this.showReportModal = this.showReportModal.bind(this);
     this.hideReportModal = this.hideReportModal.bind(this);
     this.renderReportModal = this.renderReportModal.bind(this);
-    this.handleBackToDashboardList = this.handleBackToDashboardList.bind(this);
   }
 
   componentDidMount() {
@@ -242,10 +241,6 @@ class Header extends React.PureComponent {
       updateDashboardTitle(nextText);
       onChange();
     }
-  }
-
-  handleBackToDashboardList() {
-    window.location.assign('/dashboard/list/');
   }
 
   handleCtrlY() {
@@ -506,7 +501,11 @@ class Header extends React.PureComponent {
         data-test-id={`${dashboardInfo.id}`}
       >
         <div className="dashboard-component-header header-large">
-          <i className="dashboard-return fa fa-chevron-left" aria-hidden="true" onClick={this.handleBackToDashboardList}></i>
+          <i
+            className="dashboard-return fa fa-chevron-left"
+            aria-hidden="true"
+            onClick={window.location.assign('/dashboard/list/')}
+          />
           <EditableTitle
             title={dashboardTitle}
             canEdit={userCanEdit && editMode}

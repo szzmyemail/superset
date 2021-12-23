@@ -172,9 +172,9 @@ const { SubMenu } = DropdownMenu;
 const { useBreakpoint } = Grid;
 
 export function Menu({
-                       data: { menu, brand, navbar_right: navbarRight, settings },
-                       isFrontendRoute = () => false,
-                     }: MenuProps) {
+  data: { menu, brand, navbar_right: navbarRight, settings },
+  isFrontendRoute = () => false,
+}: MenuProps) {
   const [showMenu, setMenu] = useState<MenuMode>('horizontal');
   const screens = useBreakpoint();
 
@@ -194,12 +194,12 @@ export function Menu({
   if (standalone) return <></>;
 
   const renderSubMenu = ({
-                           label,
-                           childs,
-                           url,
-                           index,
-                           isFrontendRoute,
-                         }: MenuObjectProps) => {
+    label,
+    childs,
+    url,
+    index,
+    isFrontendRoute,
+  }: MenuObjectProps) => {
     if (url && isFrontendRoute) {
       return (
         <DropdownMenu.Item key={label} role="presentation">

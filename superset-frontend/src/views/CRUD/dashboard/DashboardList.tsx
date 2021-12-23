@@ -55,15 +55,15 @@ import { DashboardStatus } from './types';
 const PAGE_SIZE = 25;
 const PASSWORDS_NEEDED_MESSAGE = t(
   'The passwords for the databases below are needed in order to ' +
-  'import them together with the dashboards. Please note that the ' +
-  '"Secure Extra" and "Certificate" sections of ' +
-  'the database configuration are not present in export files, and ' +
-  'should be added manually after the import if they are needed.',
+    'import them together with the dashboards. Please note that the ' +
+    '"Secure Extra" and "Certificate" sections of ' +
+    'the database configuration are not present in export files, and ' +
+    'should be added manually after the import if they are needed.',
 );
 const CONFIRM_OVERWRITE_MESSAGE = t(
   'You are importing one or more dashboards that already exist. ' +
-  'Overwriting might cause you to lose some of your work. Are you ' +
-  'sure you want to overwrite?',
+    'Overwriting might cause you to lose some of your work. Are you ' +
+    'sure you want to overwrite?',
 );
 
 interface DashboardListProps {
@@ -228,54 +228,54 @@ function DashboardList(props: DashboardListProps) {
     () => [
       ...(props.user.userId
         ? [
-          {
-            Cell: ({
-                     row: {
-                       original: { id },
-                     },
-                   }: any) => (
-              <FaveStar
-                itemId={id}
-                saveFaveStar={saveFavoriteStatus}
-                isStarred={favoriteStatus[id]}
-              />
-            ),
-            Header: '',
-            id: 'id',
-            disableSortBy: true,
-            size: 'xs',
-          },
-        ]
+            {
+              Cell: ({
+                row: {
+                  original: { id },
+                },
+              }: any) => (
+                <FaveStar
+                  itemId={id}
+                  saveFaveStar={saveFavoriteStatus}
+                  isStarred={favoriteStatus[id]}
+                />
+              ),
+              Header: '',
+              id: 'id',
+              disableSortBy: true,
+              size: 'xs',
+            },
+          ]
         : []),
       {
         Cell: ({
-                 row: {
-                   original: { url, dashboard_title: dashboardTitle },
-                 },
-               }: any) => <Link to={url}>{dashboardTitle}</Link>,
+          row: {
+            original: { url, dashboard_title: dashboardTitle },
+          },
+        }: any) => <Link to={url}>{dashboardTitle}</Link>,
         Header: t('Title'),
         accessor: 'dashboard_title',
       },
 
       {
         Cell: ({
-                 row: {
-                   original: {
-                     changed_by_name: changedByName,
-                     changed_by_url: changedByUrl,
-                   },
-                 },
-               }: any) => <a href={changedByUrl}>{changedByName}</a>,
+          row: {
+            original: {
+              changed_by_name: changedByName,
+              changed_by_url: changedByUrl,
+            },
+          },
+        }: any) => <a href={changedByUrl}>{changedByName}</a>,
         Header: t('Modified by'),
         accessor: 'changed_by.first_name',
         size: 'xl',
       },
       {
         Cell: ({
-                 row: {
-                   original: { status },
-                 },
-               }: any) =>
+          row: {
+            original: { status },
+          },
+        }: any) =>
           status === DashboardStatus.PUBLISHED ? t('Published') : t('Draft'),
         Header: t('Status'),
         accessor: 'published',
@@ -283,20 +283,20 @@ function DashboardList(props: DashboardListProps) {
       },
       {
         Cell: ({
-                 row: {
-                   original: { changed_on_delta_humanized: changedOn },
-                 },
-               }: any) => <span className="no-wrap">{changedOn}</span>,
+          row: {
+            original: { changed_on_delta_humanized: changedOn },
+          },
+        }: any) => <span className="no-wrap">{changedOn}</span>,
         Header: t('Modified'),
         accessor: 'changed_on_delta_humanized',
         size: 'xl',
       },
       {
         Cell: ({
-                 row: {
-                   original: { created_by: createdBy },
-                 },
-               }: any) =>
+          row: {
+            original: { created_by: createdBy },
+          },
+        }: any) =>
           createdBy ? `${createdBy.first_name} ${createdBy.last_name}` : '',
         Header: t('Created by'),
         accessor: 'created_by',
@@ -305,10 +305,10 @@ function DashboardList(props: DashboardListProps) {
       },
       {
         Cell: ({
-                 row: {
-                   original: { owners = [] },
-                 },
-               }: any) => <FacePile users={owners} />,
+          row: {
+            original: { owners = [] },
+          },
+        }: any) => <FacePile users={owners} />,
         Header: t('Owners'),
         accessor: 'owners',
         disableSortBy: true,

@@ -63,15 +63,15 @@ import ChartCard from './ChartCard';
 const PAGE_SIZE = 25;
 const PASSWORDS_NEEDED_MESSAGE = t(
   'The passwords for the databases below are needed in order to ' +
-  'import them together with the charts. Please note that the ' +
-  '"Secure Extra" and "Certificate" sections of ' +
-  'the database configuration are not present in export files, and ' +
-  'should be added manually after the import if they are needed.',
+    'import them together with the charts. Please note that the ' +
+    '"Secure Extra" and "Certificate" sections of ' +
+    'the database configuration are not present in export files, and ' +
+    'should be added manually after the import if they are needed.',
 );
 const CONFIRM_OVERWRITE_MESSAGE = t(
   'You are importing one or more charts that already exist. ' +
-  'Overwriting might cause you to lose some of your work. Are you ' +
-  'sure you want to overwrite?',
+    'Overwriting might cause you to lose some of your work. Are you ' +
+    'sure you want to overwrite?',
 );
 
 setupPlugins();
@@ -215,31 +215,31 @@ function ChartList(props: ChartListProps) {
     () => [
       ...(props.user.userId
         ? [
-          {
-            Cell: ({
-                     row: {
-                       original: { id },
-                     },
-                   }: any) => (
-              <FaveStar
-                itemId={id}
-                saveFaveStar={saveFavoriteStatus}
-                isStarred={favoriteStatus[id]}
-              />
-            ),
-            Header: '',
-            id: 'id',
-            disableSortBy: true,
-            size: 'xs',
-          },
-        ]
+            {
+              Cell: ({
+                row: {
+                  original: { id },
+                },
+              }: any) => (
+                <FaveStar
+                  itemId={id}
+                  saveFaveStar={saveFavoriteStatus}
+                  isStarred={favoriteStatus[id]}
+                />
+              ),
+              Header: '',
+              id: 'id',
+              disableSortBy: true,
+              size: 'xs',
+            },
+          ]
         : []),
       {
         Cell: ({
-                 row: {
-                   original: { url, slice_name: sliceName },
-                 },
-               }: any) => (
+          row: {
+            original: { url, slice_name: sliceName },
+          },
+        }: any) => (
           <a href={url} data-test={`${sliceName}-list-chart-title`}>
             {sliceName}
           </a>
@@ -249,23 +249,23 @@ function ChartList(props: ChartListProps) {
       },
       {
         Cell: ({
-                 row: {
-                   original: { viz_type: vizType },
-                 },
-               }: any) => registry.get(vizType)?.name || vizType,
+          row: {
+            original: { viz_type: vizType },
+          },
+        }: any) => registry.get(vizType)?.name || vizType,
         Header: t('Visualization type'),
         accessor: 'viz_type',
         size: 'xxl',
       },
       {
         Cell: ({
-                 row: {
-                   original: {
-                     datasource_name_text: dsNameTxt,
-                     datasource_url: dsUrl,
-                   },
-                 },
-               }: any) => <a href={dsUrl}>{dsNameTxt}</a>,
+          row: {
+            original: {
+              datasource_name_text: dsNameTxt,
+              datasource_url: dsUrl,
+            },
+          },
+        }: any) => <a href={dsUrl}>{dsNameTxt}</a>,
         Header: t('Dataset'),
         accessor: 'datasource_id',
         disableSortBy: true,
@@ -273,13 +273,13 @@ function ChartList(props: ChartListProps) {
       },
       {
         Cell: ({
-                 row: {
-                   original: {
-                     last_saved_by: lastSavedBy,
-                     changed_by_url: changedByUrl,
-                   },
-                 },
-               }: any) => (
+          row: {
+            original: {
+              last_saved_by: lastSavedBy,
+              changed_by_url: changedByUrl,
+            },
+          },
+        }: any) => (
           <a href={changedByUrl}>
             {lastSavedBy?.first_name
               ? `${lastSavedBy?.first_name} ${lastSavedBy?.last_name}`
@@ -292,10 +292,10 @@ function ChartList(props: ChartListProps) {
       },
       {
         Cell: ({
-                 row: {
-                   original: { last_saved_at: lastSavedAt },
-                 },
-               }: any) => (
+          row: {
+            original: { last_saved_at: lastSavedAt },
+          },
+        }: any) => (
           <span className="no-wrap">
             {lastSavedAt ? moment.utc(lastSavedAt).fromNow() : null}
           </span>
@@ -311,10 +311,10 @@ function ChartList(props: ChartListProps) {
       },
       {
         Cell: ({
-                 row: {
-                   original: { created_by: createdBy },
-                 },
-               }: any) =>
+          row: {
+            original: { created_by: createdBy },
+          },
+        }: any) =>
           createdBy ? `${createdBy.first_name} ${createdBy.last_name}` : '',
         Header: t('Created by'),
         accessor: 'created_by',
