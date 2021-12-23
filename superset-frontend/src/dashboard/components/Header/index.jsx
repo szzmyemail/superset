@@ -504,7 +504,7 @@ class Header extends React.PureComponent {
           <i
             className="dashboard-return fa fa-chevron-left"
             aria-hidden="true"
-            onClick={window.location.assign('/dashboard/list/')}
+            onClick={() => window.location.assign('/dashboard/list/')}
           />
           <EditableTitle
             title={dashboardTitle}
