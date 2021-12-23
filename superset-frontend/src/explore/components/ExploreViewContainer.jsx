@@ -494,7 +494,6 @@ function ExploreViewContainer(props) {
         }
       >
         <div className="title-container">
-          {/*<a className="dashboard-return" href="/chart/list">Back</a>*/}
           <span className="horizont al-text">{t('Dataset')}</span>
           <span
             role="button"
