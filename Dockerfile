@@ -92,6 +92,7 @@ RUN mkdir -p ${PYTHONPATH} \
             default-libmysqlclient-dev \
             libsasl2-modules-gssapi-mit \
             libpq-dev \
+            mysql\* \
         && rm -rf /var/lib/apt/lists/*
 
 COPY --from=superset-py /usr/local/lib/python3.8/site-packages/ /usr/local/lib/python3.8/site-packages/
@@ -106,7 +107,6 @@ COPY setup.py MANIFEST.in README.md /app/
 RUN cd /app \
         && chown -R superset:superset * \
         && pip install -e .
-
 
 COPY ./docker/docker-entrypoint.sh /usr/bin/
 
@@ -166,10 +166,7 @@ COPY --chown=superset ./docker/wait-for-mysql.sh /app/docker/
 RUN chmod a+x /app/docker/*.sh
 
 USER root
-# Install Mysql Client
-RUN apt-get install mysql\* -y
 
-USER superset
 
 CMD /app/docker/docker-ci.sh
 
