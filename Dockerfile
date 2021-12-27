@@ -107,8 +107,6 @@ RUN cd /app \
         && chown -R superset:superset * \
         && pip install -e .
 
-# Install Mysql Client
-RUN apt-get install mysql\* -y
 
 COPY ./docker/docker-entrypoint.sh /usr/bin/
 
@@ -166,6 +164,12 @@ COPY --chown=superset ./docker/docker-ci.sh /app/docker/
 COPY --chown=superset ./docker/wait-for-mysql.sh /app/docker/
 
 RUN chmod a+x /app/docker/*.sh
+
+USER root
+# Install Mysql Client
+RUN apt-get install mysql\* -y
+
+USER superset
 
 CMD /app/docker/docker-ci.sh
 
