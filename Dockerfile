@@ -92,7 +92,6 @@ RUN mkdir -p ${PYTHONPATH} \
             default-libmysqlclient-dev \
             libsasl2-modules-gssapi-mit \
             libpq-dev \
-            mysql\* \
         && rm -rf /var/lib/apt/lists/*
 
 COPY --from=superset-py /usr/local/lib/python3.8/site-packages/ /usr/local/lib/python3.8/site-packages/
@@ -161,12 +160,8 @@ FROM lean AS ci
 COPY --chown=superset ./docker/docker-bootstrap.sh /app/docker/
 COPY --chown=superset ./docker/docker-init.sh /app/docker/
 COPY --chown=superset ./docker/docker-ci.sh /app/docker/
-COPY --chown=superset ./docker/wait-for-mysql.sh /app/docker/
 
 RUN chmod a+x /app/docker/*.sh
-
-USER root
-
 
 CMD /app/docker/docker-ci.sh
 

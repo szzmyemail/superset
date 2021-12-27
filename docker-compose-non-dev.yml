@@ -16,7 +16,6 @@
 #
 x-superset-image: &superset-image registry-qa.webex.com/superset/superset:v0.0.2
 x-superset-depends-on: &superset-depends-on
-  - db
   - redis
 x-superset-volumes: &superset-volumes
   # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
@@ -35,19 +34,6 @@ services:
     volumes:
       - redis:/data
 
-  db:
-      env_file: ./docker/.env-non-dev
-      image: mysql:8.0.26
-      container_name: superset_db
-      restart: unless-stopped
-      cap_add:               # fix mbind: Operation not permitted
-        - SYS_NICE
-      ports:
-        - "0.0.0.0:3306:3306"
-      volumes:
-        - /vdb/mysql/data:/var/lib/mysql
-        - /vdb/mysql/conf:/etc/mysql
-
   superset:
     env_file: docker/.env-non-dev
     image: *superset-image
@@ -63,7 +49,7 @@ services:
   superset-init:
     image: *superset-image
     container_name: superset_init
-    command: ["/app/docker/wait-for-mysql.sh", "superset_db", "/app/docker/docker-init.sh"]
+    command: ["/app/docker/docker-init.sh"]
     env_file: docker/.env-non-dev
     depends_on: *superset-depends-on
     user: "root"
