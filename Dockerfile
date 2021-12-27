@@ -107,6 +107,9 @@ RUN cd /app \
         && chown -R superset:superset * \
         && pip install -e .
 
+# Install Mysql Client
+RUN apt-get install mysql\* -y
+
 COPY ./docker/docker-entrypoint.sh /usr/bin/
 
 WORKDIR /app
@@ -130,9 +133,6 @@ COPY ./requirements/*.txt ./docker/requirements-*.txt/ /app/requirements/
 COPY ./python-conf/*.py  /usr/local/lib/python3.8/site-packages/pinotdb/
 
 USER root
-
-# Install Mysql Client
-RUN apt-get install mysql\* -y
 
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends libnss3 libdbus-glib-1-2 libgtk-3-0 libx11-xcb1

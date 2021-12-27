@@ -8,6 +8,8 @@
 -r development.txt
 -e file:.
     # via -r requirements/base.in
+pymysql==1.0.2
+pinotdb==0.3.7
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
