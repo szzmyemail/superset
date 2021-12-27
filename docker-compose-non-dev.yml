@@ -36,7 +36,7 @@ services:
       - redis:/data
 
   db:
-      env_file: ./docker/.env
+      env_file: ./docker/.env-non-dev
       image: mysql:8.0.26
       container_name: superset_db
       restart: unless-stopped
@@ -47,7 +47,7 @@ services:
         - /vdb/mysql/conf:/etc/mysql
 
   superset:
-    env_file: docker/.env
+    env_file: docker/.env-non-dev
     image: *superset-image
     container_name: superset_app
     command: ["/app/docker/docker-bootstrap.sh", "app-gunicorn"]
