@@ -14,9 +14,9 @@ botocore==1.21.19
     # via
     #   boto3
     #   s3transfer
-cached-property
+cached-property==1.5.2
     # via tableschema
-certifi==2021.5.30
+certifi
     # via requests
 charset-normalizer==2.0.4
     # via requests
