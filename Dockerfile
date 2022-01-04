@@ -109,6 +109,9 @@ RUN cd /app \
 
 COPY ./docker/docker-entrypoint.sh /usr/bin/
 
+## Add pinot Auth
+COPY ./python-conf/*.py  /usr/local/lib/python3.8/site-packages/pinotdb/
+
 WORKDIR /app
 
 USER superset
@@ -127,7 +130,6 @@ ARG GECKODRIVER_VERSION=v0.28.0
 ARG FIREFOX_VERSION=88.0
 
 COPY ./requirements/*.txt ./docker/requirements-*.txt/ /app/requirements/
-COPY ./python-conf/*.py  /usr/local/lib/python3.8/site-packages/pinotdb/
 
 USER root
 
