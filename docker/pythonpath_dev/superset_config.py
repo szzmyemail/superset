@@ -126,6 +126,9 @@ class AirbnbAuthRemoteUserView(AuthRemoteUserView):
         return redirect(url_for('Superset.sqllab', _scheme="https", _external=True))
       elif type == "datasets":
         return redirect((url_for('TableModelView.list', _scheme="https", _external=True)))
+      elif type == "view":
+        dashboardId = request.args.get("id")
+        return redirect(url_for("Superset.dashboard", dashboard_id_or_slug=dashboardId, _scheme="https", _external=True))
 # Create a custom Security manager that override the authremoteuserview with the one I've created
 class CustomSecurityManager(SupersetSecurityManager):
     authremoteuserview = AirbnbAuthRemoteUserView
