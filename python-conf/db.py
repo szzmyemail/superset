@@ -188,8 +188,8 @@ class Cursor(object):
         port=8099,
         scheme="http",
         path="/query/sql",
-        username="admin",
-        password="Pda@wap%admin",
+        username="pda",
+        password="pda@WholeTables",
         extra_request_headers="",
         debug=False,
         preserve_types=False,
@@ -198,7 +198,7 @@ class Cursor(object):
     ):
         if path == "query":
             path = "query/sql"
-        self.url = parse.urlunparse((scheme, f"{host}:{port}", path, "admin", "Pda@wap%admin", None))
+        self.url = parse.urlunparse((scheme, f"{host}:{port}", path, username, password, None))
 
         # This read/write attribute specifies the number of rows to fetch at a
         # time with .fetchmany(). It defaults to 1 meaning to fetch a single
@@ -222,7 +222,7 @@ class Cursor(object):
             self._ignore_exception_error_codes = []
             
         self.session = requests.Session()
-        self.session.auth = ("admin", "Pda@wap%admin")
+        self.session.auth = ("pda", "pda@WholeTables")
         self.session.headers.update({"Content-Type": "application/json"})
         
         extra_headers = {}
